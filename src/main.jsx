@@ -12,6 +12,7 @@ import ErrorPage from './pages/error/error';
 import LoginPage from './pages/auth/login';
 import { AuthWrapper } from './components/context/auth.context';
 import Home from './pages/home/home';
+import PrivateRoute from './components/private/privateRoute';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,7 +21,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />
+        element: (
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        )
       }
     ]
   },

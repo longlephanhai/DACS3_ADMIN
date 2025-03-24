@@ -39,15 +39,18 @@ const App = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const { user, setUser } = useContext(AuthContext)
+  const { user, setUser, isAppLoading, setIsAppLoading } = useContext(AuthContext)
   useEffect(() => {
     fetchUserInfo()
   }, [])
   const fetchUserInfo = async () => {
     const res = await getProfileAPI()
+    console.log(res);
+
     if (res?.data) {
       setUser(res.data)
     }
+    setIsAppLoading(false)
   }
   return (
     <Layout
@@ -65,7 +68,7 @@ const App = () => {
             xl: 80,
             xxl: 100,
           }}
-          icon={user.image ? <img src={user?.image} /> : <AntDesignOutlined />}
+          icon={user.image ? <img src={import.meta.env.VITE_BACK_URL + "/images/default/" + user?.image} /> : <AntDesignOutlined />}
         />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
       </Sider>
@@ -86,8 +89,7 @@ const App = () => {
               margin: '16px 0',
             }}
           >
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+
           </Breadcrumb>
           <div
             style={{
@@ -97,7 +99,9 @@ const App = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <Outlet />
+            {
+              isAppLoading === true ? 'Loading...' : <Outlet />
+            }
           </div>
         </Content>
         <Footer

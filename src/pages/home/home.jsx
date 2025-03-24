@@ -5,7 +5,7 @@ const Home = () => {
   const { user } = useContext(AuthContext)
   return (
     <>
-      home page
+
     </>
   )
 }
