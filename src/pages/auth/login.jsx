@@ -1,11 +1,32 @@
-import { Button, Checkbox, Form, Input } from 'antd';
-const onFinish = (values) => {
-  console.log('Success:', values);
-};
+import { Button, Form, Input, message, notification } from 'antd';
+import { loginAPI } from '../../services/auth.service';
+import { useContext } from 'react';
+import { AuthContext } from '../../components/context/auth.context';
+import { useNavigate } from 'react-router-dom'
+
 
 const LoginPage = () => {
+  const [form] = Form.useForm()
+  const { setUser } = useContext(AuthContext)
+
+  const navigate = useNavigate()
+  const onFinish = async (values) => {
+    const res = await loginAPI(values.email, values.password)
+    if (res.data) {
+      message.success(res.message)
+      localStorage.setItem("access_token", res.data.access_token)
+      setUser(res.data.user)
+      navigate('/')
+    } else {
+      notification.error({
+        message: "Đăng nhập thất bại",
+        description: res.message
+      })
+    }
+  };
   return (
     <Form
+      form={form}
       name="basic"
       labelCol={{
         span: 8,

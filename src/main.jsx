@@ -10,11 +10,19 @@ import {
 import App from './App';
 import ErrorPage from './pages/error/error';
 import LoginPage from './pages/auth/login';
+import { AuthWrapper } from './components/context/auth.context';
+import Home from './pages/home/home';
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: '/',
+        element: <Home />
+      }
+    ]
   },
   {
     path: '/auth/login',
@@ -23,6 +31,8 @@ const router = createBrowserRouter([
 ]);
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthWrapper>
+      <RouterProvider router={router} />
+    </AuthWrapper>
   </StrictMode>,
 )

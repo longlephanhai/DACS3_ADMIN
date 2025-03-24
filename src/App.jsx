@@ -3,12 +3,16 @@ import {
   FileOutlined,
   PieChartOutlined,
   TeamOutlined,
+  UserAddOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { AntDesignOutlined } from '@ant-design/icons';
 import { Avatar, Button } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { Outlet } from 'react-router';
+import { getProfileAPI } from './services/auth.service';
+import { AuthContext } from './components/context/auth.context';
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -19,7 +23,7 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem('Option 1', '1', <PieChartOutlined />),
+  getItem('User', '1', <UserAddOutlined />),
   getItem('Option 2', '2', <DesktopOutlined />),
   getItem('User', 'sub1', <UserOutlined />, [
     getItem('Tom', '3'),
@@ -34,6 +38,17 @@ const App = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  const { user, setUser } = useContext(AuthContext)
+  useEffect(() => {
+    fetchUserInfo()
+  }, [])
+  const fetchUserInfo = async () => {
+    const res = await getProfileAPI()
+    if (res?.data) {
+      setUser(res.data)
+    }
+  }
   return (
     <Layout
       style={{
@@ -50,7 +65,7 @@ const App = () => {
             xl: 80,
             xxl: 100,
           }}
-          icon={<AntDesignOutlined />}
+          icon={user.image ? <img src={user?.image} /> : <AntDesignOutlined />}
         />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
       </Sider>
@@ -82,7 +97,7 @@ const App = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            Bill is a cat.
+            <Outlet />
           </div>
         </Content>
         <Footer
