@@ -1,4 +1,5 @@
 import {
+  LinuxOutlined,
   ProductOutlined,
   UserAddOutlined,
 
@@ -48,6 +49,14 @@ const App = () => {
         navigate('/product')
       }
     },
+    {
+      key: '3',
+      icon: <LinuxOutlined />,
+      label: 'Product',
+      onClick: () => {
+        navigate('/category')
+      }
+    }
   ]
   return (
     <Layout

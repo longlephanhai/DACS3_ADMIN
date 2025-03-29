@@ -1,7 +1,6 @@
 import { Table } from 'antd';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getAllUserAPI } from '../../services/auth.service';
-import Link from 'antd/es/typography/Link';
 const Home = () => {
   const [current, setCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(10);

@@ -1,11 +1,16 @@
 import { Form, Image, Input, message, Modal, Radio, Select } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createProductAPI } from '../../services/product.service';
+import { getAllCategoryAPI } from '../../services/category.service';
 const ModalComponent = (props) => {
   const [form] = Form.useForm();
   const { isModalOpen, setIsModalOpen } = props
   const [urlImg, setUrlImg] = useState('')
   const [fileImg, setFileImg] = useState(null);
+  const [categoryList, setCategoryList] = useState([])
+  useEffect(() => {
+    fetchCategoryApi()
+  }, [])
   const handleChangeImage = (e) => {
     const file = e.target.files[0]
     if (file) {
@@ -33,6 +38,12 @@ const ModalComponent = (props) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const fetchCategoryApi = async () => {
+    const response = await getAllCategoryAPI();
+    if (response && response.data) {
+      setCategoryList(response.data)
+    }
+  }
   return (
     <>
       <Modal title="Tạo mới sản phẩm"
@@ -58,7 +69,7 @@ const ModalComponent = (props) => {
           label="Tên sản phẩm"
           rules={[{ required: true, message: 'Vui lòng nhập tên sản phẩm!' }]}
         >
-          <Input />
+          <Input placeholder='Nhập tên sản phẩm' />
         </Form.Item>
 
         <Form.Item
@@ -66,7 +77,7 @@ const ModalComponent = (props) => {
           label="Miêu tả sản phẩm"
           rules={[{ required: true, message: 'Vui lòng nhập miêu tả sản phẩm!' }]}
         >
-          <Input type="textarea" />
+          <Input.TextArea type="textarea" placeholder='Nhập miêu tả sản phẩm' />
         </Form.Item>
 
         <Form.Item
@@ -74,7 +85,7 @@ const ModalComponent = (props) => {
           label="Giá sản phẩm"
           rules={[{ required: true, message: 'Vui lòng nhập giá sản phẩm!' }]}
         >
-          <Input type="number" min={0} step={1000} prefix="₫" />
+          <Input placeholder='Nhập giá sản phẩm' type="number" min={0} step={1000} suffix="₫" />
         </Form.Item>
 
         <Form.Item
@@ -82,7 +93,7 @@ const ModalComponent = (props) => {
           label="Số lượng sản phẩm"
           rules={[{ required: true, message: 'Vui lòng nhập số lượng sản phẩm!' }]}
         >
-          <Input type="number" min={0} step={1} prefix="số lượng" />
+          <Input placeholder='Nhập số lượng sản phẩm' type="number" min={0} step={1} suffix="Sản phẩm" />
         </Form.Item>
 
         <Form.Item
@@ -90,10 +101,14 @@ const ModalComponent = (props) => {
           label="Danh mục sản phẩm"
           rules={[{ required: true, message: 'Vui lòng chọn danh mục sản phẩm!' }]}
         >
-          <Select>
-            <Select.Option value="1">Danh mục 1</Select.Option>
-            <Select.Option value="2">Danh mục 2</Select.Option>
-            <Select.Option value="3">Danh mục 3</Select.Option>
+          <Select placeholder="Chọn danh mục sản phẩm" allowClear showSearch>
+            {
+              categoryList && categoryList.length > 0 && categoryList.map((item, index) => {
+                return (
+                  <Select.Option key={item._id} value={item._id}>{item.title}</Select.Option>
+                )
+              })
+            }
           </Select>
         </Form.Item>
 
@@ -102,7 +117,7 @@ const ModalComponent = (props) => {
           label="Hình ảnh sản phẩm"
           rules={[{ required: true, message: 'Vui lòng nhập hình ảnh sản phẩm!' }]}
         >
-          <Input type="file" accept="image/*" onChange={handleChangeImage} />
+          <Input placeholder='Chọn ảnh sản phẩm' type="file" accept="image/*" onChange={handleChangeImage} />
         </Form.Item>
         <Image
           width={100}

@@ -1,8 +1,13 @@
 import { Button, Card, Space } from 'antd';
 import { useState } from 'react';
 import ModalComponent from '../../components/product/modal';
+import TableProduct from '../../components/product/table';
 const ProductPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [data, setData] = useState([])
+  const fetchApi = async () => {
+
+  }
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -14,9 +19,7 @@ const ProductPage = () => {
             width: "80vw",
             padding: "20px",
           }}>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
+          <TableProduct />
         </Card>
       </Space>
       <ModalComponent isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />

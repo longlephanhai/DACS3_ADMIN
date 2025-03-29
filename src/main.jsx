@@ -12,6 +12,7 @@ import { AuthWrapper } from './components/context/auth.context';
 import Home from './pages/home/home';
 import PrivateRoute from './components/private/privateRoute';
 import ProductPage from './pages/product/product';
+import CategoryPage from './pages/category/category.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ProductPage />
+          </PrivateRoute>
+        )
+      },
+      {
+        path: "category",
+        element: (
+          <PrivateRoute>
+            <CategoryPage />
           </PrivateRoute>
         )
       }
