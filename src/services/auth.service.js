@@ -1,6 +1,5 @@
 import axios from "./axios.customize"
 
-
 const loginAPI = (email, password) => {
   const URL_BACKEND = "/api/v1/auth/login"
   const data = {
