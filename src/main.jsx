@@ -4,8 +4,6 @@ import './index.css'
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
-  Link,
 } from "react-router-dom";
 import App from './App';
 import ErrorPage from './pages/error/error';
@@ -13,6 +11,7 @@ import LoginPage from './pages/auth/login';
 import { AuthWrapper } from './components/context/auth.context';
 import Home from './pages/home/home';
 import PrivateRoute from './components/private/privateRoute';
+import ProductPage from './pages/product/product';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,6 +23,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Home />
+          </PrivateRoute>
+        )
+      },
+      {
+        path: 'product',
+        element: (
+          <PrivateRoute>
+            <ProductPage />
           </PrivateRoute>
         )
       }

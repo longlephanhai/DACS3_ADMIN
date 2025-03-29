@@ -1,40 +1,21 @@
 import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
+  ProductOutlined,
   UserAddOutlined,
-  UserOutlined,
+
 } from '@ant-design/icons';
 import { AntDesignOutlined } from '@ant-design/icons';
-import { Avatar, Button } from 'antd';
+import { Avatar } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import { useContext, useEffect, useState } from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, useNavigate } from 'react-router';
 import { getProfileAPI } from './services/auth.service';
 import { AuthContext } from './components/context/auth.context';
 const { Header, Content, Footer, Sider } = Layout;
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-const items = [
-  getItem('User', '1', <UserAddOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
-  ]),
-  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  getItem('Files', '9', <FileOutlined />),
-];
+
+
 const App = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate()
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -50,6 +31,24 @@ const App = () => {
     }
     setIsAppLoading(false)
   }
+  const items = [
+    {
+      key: '1',
+      icon: <UserAddOutlined />,
+      label: 'User',
+      onClick: () => {
+        navigate('/')
+      }
+    },
+    {
+      key: '2',
+      icon: <ProductOutlined />,
+      label: 'Product',
+      onClick: () => {
+        navigate('/product')
+      }
+    },
+  ]
   return (
     <Layout
       style={{
