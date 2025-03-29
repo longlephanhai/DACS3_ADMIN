@@ -13,7 +13,12 @@ const getProfileAPI = () => {
   const URL_BACKEND = "/api/v1/auth/profile"
   return axios.get(URL_BACKEND)
 }
+const getAllUserAPI = (current, pageSize) => {
+  const URL_BACKEND = `/api/v1/users?current=${current}&pageSize=${pageSize}`
+  return axios.get(URL_BACKEND)
+}
 export {
   loginAPI,
-  getProfileAPI
+  getProfileAPI,
+  getAllUserAPI
 }

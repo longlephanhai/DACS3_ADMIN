@@ -45,8 +45,6 @@ const App = () => {
   }, [])
   const fetchUserInfo = async () => {
     const res = await getProfileAPI()
-    console.log(res);
-
     if (res?.data) {
       setUser(res.data)
     }
