@@ -75,7 +75,6 @@ const Home = () => {
         rowKey={"_id"}
         dataSource={data}
         onChange={onChange}
-        showSorterTooltip={{ target: 'sorter-icon' }}
         pagination={
           {
             current: current,

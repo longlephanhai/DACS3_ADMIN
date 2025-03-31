@@ -17,6 +17,11 @@ const createProductAPI = (data) => {
   formData.append('isActive', data.isActive)
   return axios.post(URL_BACKEND, formData, config)
 }
+const getAllProductAPI = (current, pageSize) => {
+  const URL_BACKEND = `/api/v1/products?current=${current}&pageSize=${pageSize}`
+  return axios.get(URL_BACKEND)
+}
 export {
-  createProductAPI
+  createProductAPI,
+  getAllProductAPI
 }

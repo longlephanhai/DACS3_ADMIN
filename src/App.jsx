@@ -52,7 +52,7 @@ const App = () => {
     {
       key: '3',
       icon: <LinuxOutlined />,
-      label: 'Product',
+      label: 'Category',
       onClick: () => {
         navigate('/category')
       }
